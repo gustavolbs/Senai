@@ -1,8 +1,8 @@
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   const Produto = sequelize.define('Produto', {
-    name: Sequelize.STRING,
-    value: Sequelize.INTEGER,
-    image: Sequelize.STRING,
+    name: DataTypes.STRING,
+    value: DataTypes.INTEGER,
+    image: DataTypes.STRING,
   });
 
   return Produto;

@@ -13,10 +13,11 @@ class ProdutoController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const productExists = await Produto.findOne({
+    const productExists = await Produto.find({
       where: { name: req.body.name },
     });
 
+    console.log('chegou aqui');
     if (productExists) {
       return res.status(400).json({ error: 'Product already exists' });
     }

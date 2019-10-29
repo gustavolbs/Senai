@@ -1,9 +1,8 @@
-const express = require('express');
+import express from 'express';
+import ProdutoController from './controllers/ProdutoController';
 
 const multer = require('./middlewares/multer');
 const filehelper = require('./middlewares/file-helper');
-
-const ProdutoController = require('./controllers/ProdutoController');
 
 const routes = express.Router();
 
@@ -43,9 +42,7 @@ routes.post('/upload', multer.single('image'), (req, res, next) => {
 });
 
 routes.get('/produto', (req, res) => {});
-routes.post('/produto', async (req, res) => {
-  await ProdutoController.store;
-});
+routes.post('/register', ProdutoController.store);
 routes.get('/produto/:id', (req, res) => {});
 routes.put('/produto/:id', (req, res) => {});
 routes.delete('/produto/:id', (req, res) => {});
