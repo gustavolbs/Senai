@@ -1,21 +1,31 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('CreditCards', {
+    return queryInterface.createTable('Transactions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      number: {
+      transaction_id: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      card_id: {
+      status: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
-      holder_name: {
+      checkout_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Checkout',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      authorization_code: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -23,8 +33,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      expiration_date: {
+      authorized_amount: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      tid: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      installments: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       created_at: {
@@ -38,6 +56,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('CreditCards');
+    return queryInterface.dropTable('Transactions');
   },
 };

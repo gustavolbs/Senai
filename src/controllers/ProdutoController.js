@@ -1,56 +1,55 @@
 import * as Yup from 'yup';
 
-const models = require('../models/index');
+const Produto = require('../models/produto');
 
 class ProdutoController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      value: Yup.number().required(),
+      title: Yup.string().required(),
+      price: Yup.number().required(),
       image: Yup.string().required(),
     });
 
-    console.log('chegou aqui');
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const productExists = await models.Produto.findOne({
-      where: { name: req.body.name },
+    const productExists = await Produto.findOne({
+      where: { title: req.body.title },
     });
 
     if (productExists) {
       return res.status(400).json({ error: 'Product already exists' });
     }
 
-    req.body.value = req.body.value * 100;
-    const { id, name, value, image } = await models.Produto.create(req.body);
+    req.body.price = req.body.price * 100;
+    const { id, title, price, image } = await Produto.create(req.body);
 
     return res.json({
       id,
-      name,
-      value,
+      title,
+      price,
       image,
     });
   }
 
   async index(req, res) {
-    const produtos = await models.Produto.all();
+    const produtos = await Produto.all();
 
     return res.json(produtos.toJSON());
   }
 
   async show(req, res) {
     const { id } = req.params;
-    const product = await models.Produto.find(id);
+    const product = await Produto.find(id);
 
     return res.json(product.toJSON());
   }
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      value: Yup.number().required(),
+      title: Yup.string().required(),
+      price: Yup.number().required(),
       image: Yup.string().required(),
     });
 
@@ -58,31 +57,31 @@ class ProdutoController {
       return res.status(400).json({error: 'Validation fails!'})
     }
 
-    const {name} = req.body;
+    const {title} = req.body;
 
-    const product = await models.Produto.findByPk(req.productId);
+    const product = await Produto.findByPk(req.productId);
 
-    if (name && name !== product.name) {
-      const productExists = await models.Product.findOne({where: {name}});
+    if (title && title !== product.title) {
+      const productExists = await Product.findOne({where: {title}});
 
       if (productExists) {
         return res.status(400).json({error: "Product already exists!"});
       }
     }
 
-    const {id, name, value, image} = await product.update(req.body);
+    const {id, title, price, image} = await product.update(req.body);
 
     return res.json({
       id,
-      name,
-      value,
+      title,
+      price,
       image,
     });
   }
 
   async delete(req, res) {
     const { id } = req.params;
-    const product = await models.Produto.findByPk(id);
+    const product = await Produto.findByPk(id);
 
     await product.destroy();
 

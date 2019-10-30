@@ -1,11 +1,13 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Checkout extends Model {
+class Checkout_Product extends Model {
   static init(sequelize) {
     super.init(
       {
+        product_id: DataTypes.INTEGER,
+        checkout_id: DataTypes.INTEGER,
         amount: DataTypes.INTEGER,
-        fee: DataTypes.INTEGER,
+        total: DataTypes.INTEGER,
       },
       {
         sequelize,
@@ -14,4 +16,4 @@ class Checkout extends Model {
   }
 }
 
-module.exports = Checkout;
+module.exports = Checkout_Product;

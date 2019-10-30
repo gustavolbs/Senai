@@ -15,8 +15,8 @@ routes.get('/produto', (req, res, next) => {
     </head>
     <body>
       <form action="/produto" method="post" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="Nome do produto" />
-        <input type="number" name="value" placeholder="Valor do produto" />
+        <input type="text" name="title" placeholder="Nome do produto" />
+        <input type="number" name="price" placeholder="Valor do produto" />
         <input type="file" name="image" id="imageInput"/>
 
         <button type="submit">Enviar</button>
@@ -32,8 +32,8 @@ routes.post('/produto', multer.single('image'), (req, res, next) => {
       .compressImage(req.file, 100)
       .then(newPath => {
         req.body = {
-          name: req.body.name,
-          value: req.body.value,
+          title: req.body.title,
+          price: req.body.price,
           image: newPath
             .split('/')
             .pop()

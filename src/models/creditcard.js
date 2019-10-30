@@ -1,13 +1,20 @@
-module.exports = (sequelize, DataTypes) => {
-  const CreditCard = sequelize.define(
-    'CreditCard',
-    {
-      number: DataTypes.STRING,
-    },
-    {}
-  );
-  CreditCard.associate = function(models) {
-    // associations can be defined here
-  };
-  return CreditCard;
-};
+const { Model, DataTypes } = require('sequelize');
+
+class CreditCard extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        number: DataTypes.STRING,
+        card_id: DataTypes.STRING,
+        holder_name: DataTypes.STRING,
+        brand: DataTypes.STRING,
+        expiration_date: DataTypes.STRING,
+      },
+      {
+        sequelize,
+      }
+    );
+  }
+}
+
+module.exports = CreditCard;
