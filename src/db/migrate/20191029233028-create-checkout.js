@@ -23,16 +23,19 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      items: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       installments: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      card_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      items: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       save_card: {},
-      card_id: {},
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
