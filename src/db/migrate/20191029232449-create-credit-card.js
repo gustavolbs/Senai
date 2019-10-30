@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('CreditCards', {
+    return queryInterface.createTable('creditcards', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -27,17 +27,17 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('CreditCards');
+    return queryInterface.dropTable('creditcards');
   },
 };

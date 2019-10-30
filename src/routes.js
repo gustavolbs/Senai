@@ -1,5 +1,6 @@
 import express from 'express';
 import ProdutoController from './controllers/ProdutoController';
+import CheckoutController from './controllers/CheckoutController';
 
 const multer = require('./middlewares/multer');
 const filehelper = require('./middlewares/file-helper');
@@ -48,5 +49,7 @@ routes.post('/produto', multer.single('image'), (req, res, next) => {
 routes.get('/produto/:id', (req, res) => {});
 routes.put('/produto/:id', (req, res) => {});
 routes.delete('/produto/:id', (req, res) => {});
+
+routes.post('/checkout', CheckoutController.store);
 
 module.exports = routes;
