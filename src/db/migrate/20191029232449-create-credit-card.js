@@ -1,23 +1,15 @@
 module.exports = {
-  up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Produtos', {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable('CreditCards', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        allowNull: false,
+      number: {
         type: Sequelize.STRING,
-      },
-      value: {
         allowNull: false,
-        type: Sequelize.STRING,
-      },
-      image: {
-        allowNull: false,
-        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -27,7 +19,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-    }),
-
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Produtos'),
+    });
+  },
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('CreditCards');
+  },
 };

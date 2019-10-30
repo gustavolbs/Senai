@@ -8,16 +8,16 @@ const routes = express.Router();
 
 // routes.get('/', (req, res) => { res.json({ msg: 'Hello World' }); });
 
-routes.get('/upload', (req, res, next) => {
+routes.get('/produto', (req, res, next) => {
   res.send(`
     <head>
       <title>Criação</title>
     </head>
     <body>
-      <form action="/upload" method="post" enctype="multipart/form-data">
+      <form action="/produto" method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Nome do produto" />
+        <input type="number" name="value" placeholder="Valor do produto" />
         <input type="file" name="image" id="imageInput"/>
-        <input type="text" name="name" />
-        <input type="number" name="value" />
 
         <button type="submit">Enviar</button>
       </form>
@@ -26,23 +26,25 @@ routes.get('/upload', (req, res, next) => {
   `);
 });
 
-routes.post('/upload', multer.single('image'), (req, res, next) => {
+routes.post('/produto', multer.single('image'), (req, res, next) => {
   if (req.file) {
     filehelper
       .compressImage(req.file, 100)
-      .then(newPath =>
-        res.send(
-          `Upload e compressão realizados com sucesso! O novo caminho é:${newPath}`
-        )
-      )
+      .then(newPath => {
+        req.body = {
+          name: req.body.name,
+          value: req.body.value,
+          image: newPath
+            .split('/')
+            .pop()
+            .split('.')[0],
+        };
+        ProdutoController.store(req, res);
+      })
       .catch(err => console.log(err));
   }
-
-  // return res.send('Erro no upload');
 });
 
-routes.get('/produto', (req, res) => {});
-routes.post('/register', ProdutoController.store);
 routes.get('/produto/:id', (req, res) => {});
 routes.put('/produto/:id', (req, res) => {});
 routes.delete('/produto/:id', (req, res) => {});
