@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       amount: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         allowNull: false,
       },
       fee: {

@@ -81,24 +81,22 @@ class CheckoutController {
 
         const { card } = pagarmeTransaction;
 
-        console.log('teste');
-        const teste = await CreditCard.findOrCreate({
-          card_id: card.id,
-          number: `${card.first_digits}*********${card.last_digits}`,
-          holder_name: card.holder_name,
-          brand: card.brand,
-          expiration_date: card.expiration_date,
+        const creditcard = await CreditCard.findOrCreate({
+          where: {
+            number: `${card.first_digits}*********${card.last_digits}`,
+            holder_name: card.holder_name,
+            brand: card.brand,
+            expiration_date: card.expiration_date,
+          },
+          defaults: {
+            card_id: card.id,
+          },
         });
-
-        console.log(teste);
-        console.log('chegou aqui');
 
         const checkout = await Checkout.create({
-          amount: parseInt(amount * 100, 10),
+          amount,
           fee,
         });
-
-        console.log(checkout);
 
         const transactions = await Transaction.create({
           checkout_id: checkout.id,
@@ -108,7 +106,7 @@ class CheckoutController {
           brand: pagarmeTransaction.card.brand,
           authorized_amount: pagarmeTransaction.authorized_amount,
           tid: pagarmeTransaction.tid,
-          installments,
+          installments: pagarmeTransaction.installments,
         });
 
         return res.json(transactions.toJSON());

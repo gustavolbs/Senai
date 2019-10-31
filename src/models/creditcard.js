@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 
-class CreditCard extends Model {
+class creditcard extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -17,4 +17,4 @@ class CreditCard extends Model {
   }
 }
 
-module.exports = CreditCard;
+module.exports = creditcard;
